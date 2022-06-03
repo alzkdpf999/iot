@@ -1,0 +1,16 @@
+{
+  "name": "prj-publish",
+  "version": "1.0.0",
+  "description": "",
+  "main": "code.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-iot-device-sdk": "^2.2.12",
+    "node-dht-sensor": "^0.4.3",
+    "sds011-wrapper": "^1.4.0"
+  }
+}
