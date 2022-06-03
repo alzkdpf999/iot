@@ -124,12 +124,19 @@
                     ledGreen.pwmWrite( greenRGB); //set GREEN LED to specified value
                     ledBlue.pwmWrite( blueRGB); //set BLUE LED to specified value
             }
-                if(category == "POP"){
-                    const rainrate= JSON.parse(body).response.body.items.item[i].fcstValue;
-                    console.log(categoryName,":",rainrate);
-
+if(category == "POP"){
+	const rainrate= JSON.parse(body).response.body.items.item[i].fcstValue;
+	console.log(categoryName,":",rainrate);
+		if(rainrate>=60)
+		{
+			redRGB=255;
+			blueRGB=0;
+			greenRGB=255;
+			ledRed.pwmWrite(redRGB); //set RED LED to specified value
+        ledGreen.pwmWrite( greenRGB); //set GREEN LED to specified value
+        ledBlue.pwmWrite( blueRGB); //set BLUE LED to specified value
 }
-
+}
 }
      }   
     });
