@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.dashboard.DashboardFragment">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="나의 방 미세먼지 ( 12시간 )"
+        android:textColor="#FFA8AFAF"
+        android:textSize="30sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:orientation="vertical">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/ex3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="오늘 방평균 미세먼지( 12시간 )"
+        android:textColor="#FFA8AFAF"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/dust"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="오늘 방평균 미세먼지( 24시간 )"
+        android:textColor="#FFA8AFAF"
+        android:textSize="25sp" />
+
+</LinearLayout>
