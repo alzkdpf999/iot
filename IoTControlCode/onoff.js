@@ -19,7 +19,7 @@
     */
     
     
-    
+function onoffModule() {
     
     requestCount = 50;
     let today = new Date();
@@ -29,7 +29,7 @@
     var month = ('0' + (today.getMonth() + 1)).slice(-2);
     var day = ('0' + today.getDate()).slice(-2);
     var newday= year + month+ day;
-    
+    console.log(newday)
     
     
     if(hours % 3 == 0) {
@@ -64,7 +64,7 @@
             let categoryName;
             const category = JSON.parse(body).response.body.items.item[i].category;
             if(category == "POP") {
-                categoryName = "강수확률";
+                categoryName = "Rainrate";
             } 
             else if (category == "PTY") {
                 categoryName = "강수형태";
@@ -82,7 +82,7 @@
                 categoryName = "하늘상태";
             }
             else if (category == "TMP") {
-                categoryName = "1시간 기온";
+                categoryName = "temperature";
             }
             else if (category == "TMN") {
                 categoryName = "일 최저기온";
@@ -111,30 +111,86 @@
             if(JSON.parse(body).response.body.items.item[i].fcstTime == JSON.stringify(hourConst+1) + "00"){
 
                 if(category == "TMP"){
-                    const temperature = JSON.parse(body).response.body.items.item[i].fcstValue;
+                    
+                    
+                    
+                    let temperature = JSON.parse(body).response.body.items.item[i].fcstValue;
+                    
+                    //temperature = 0
+                    
+                    temperature= Math.floor(Math.random() * 35);
+                    
                     console.log(categoryName,":", temperature);
-                    greenRGB=temperature * 3 ;    //255off 0 on
-                    blueRGB =temperature *4 ;
-                    redRGB =temperature * 2;
-
-                    if(temperature >=25){greenRGB=255;redRGB=0;blueRGB=255;}
-                    else if(temperature <25 && temperature>15){geenRGB=0;redRGB=0;blueRGB=255;}
-                    else {greenRGB=255;redRGB=255;blueRGB=0;}
+                    greenRGB=temperature * 5 ;    //255off 0 on
+                    blueRGB =temperature * 8 ;
+                    
+                    if(temperature > 0)
+                        redRGB = 255 - temperature * 8;
+                    else 
+                        redRGB = 255;
+                    
+                    
+                    if(temperature >=15) {
+                        greenRGB = (temperature - 15) * 12;
+                    }
+                    else {
+                        greenRGB = (15 - temperature) * 12;
+                    }
+                    
+                    
+                    if(greenRGB > 255) {
+                        greenRGB =255;
+                    }
+                    
+                    
+                    
+                    if(redRGB > 255) {
+                        redRGB =255;
+                    }
+                    
+                    if(redRGB <= 0) {
+                        redRGB =0;
+                    }
+                    
+                    if(blueRGB > 255) {
+                        blueRGB =255;
+                    }
+                    
+                    
+                    greenRGB = parseInt(greenRGB);
+                    blueRGB = parseInt(blueRGB);
+                    redRGB = parseInt(redRGB);                    
+                    
+                    
+                    
+                    
+                    if(temperature <= 0){
+                        blueRGB = 0;
+                    
+                    }
+                    
+                    
+                    
+                    console.log("RGB", redRGB, greenRGB, blueRGB);
+                    
+                    //if(temperature >=25){greenRGB=255;redRGB=0;blueRGB=255;}
+                    //else if(temperature <25 && temperature>15){geenRGB=0;redRGB=0;blueRGB=255;}
+                    //else {greenRGB=255;redRGB=255;blueRGB=0;}
                     ledRed.pwmWrite(redRGB); //set RED LED to specified value
-                    ledGreen.pwmWrite( greenRGB); //set GREEN LED to specified value
-                    ledBlue.pwmWrite( blueRGB); //set BLUE LED to specified value
+                    ledGreen.pwmWrite(greenRGB); //set GREEN LED to specified value
+                    ledBlue.pwmWrite(blueRGB); //set BLUE LED to specified value
             }
 if(category == "POP"){
-	const rainrate= JSON.parse(body).response.body.items.item[i].fcstValue;
+	let rainrate= JSON.parse(body).response.body.items.item[i].fcstValue;
+    //rainrate= 80
 	console.log(categoryName,":",rainrate);
 		if(rainrate>=60)
 		{
-			redRGB=255;
-			blueRGB=0;
-			greenRGB=255;
-			ledRed.pwmWrite(redRGB); //set RED LED to specified value
-        ledGreen.pwmWrite( greenRGB); //set GREEN LED to specified value
-        ledBlue.pwmWrite( blueRGB); //set BLUE LED to specified value
+			
+            
+			ledRed.pwmWrite(0); //set RED LED to specified value
+        ledGreen.pwmWrite(255); //set GREEN LED to specified value
+        ledBlue.pwmWrite(0); //set BLUE LED to specified value
 }
 }
 }
@@ -142,12 +198,16 @@ if(category == "POP"){
     });
     
     
-    
+}
+
+
+setInterval(onoffModule, 5000);
+
     
     process.on('SIGINT', function () { //on ctrl+c
-      ledRed.digitalWrite(0); // Turn RED LED off
-      ledGreen.digitalWrite(0); // Turn GREEN LED off
-      ledBlue.digitalWrite(0); // Turn BLUE LED off
+      ledRed.digitalWrite(255); // Turn RED LED off
+      ledGreen.digitalWrite(255); // Turn GREEN LED off
+      ledBlue.digitalWrite(255); // Turn BLUE LED off
       process.exit(); //exit completely
     })
     

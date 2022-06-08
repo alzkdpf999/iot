@@ -19,10 +19,10 @@ function read () {
     var readout = sensorLib.read();
     console.log('Temperature: '+readout.temperature.toFixed(2)+'C, humidity: '+readout.humidity.toFixed(2)+'%');
 }
-sensorLib.initialize(11,4 );
+sensorLib.initialize(11,3 );
 
 client.on('connect', async function(){
-    console.log('Face Recognition System connected');
+    console.log('Getting Environment System connected');
 
     
     let dustData;
@@ -30,8 +30,8 @@ client.on('connect', async function(){
     sensor
             .setReportingMode('active')
             .then(() => {
-                console.log("Working period set to 0 minutes.");
-                console.log("\nSensor readings:");
+                //console.log("Working period set to 0 minutes.");
+                //console.log("\nSensor readings:");
 
                 // Since working period was set to 0 and mode was set to active, this event will be emitted as soon as new data is received.
                 sensor.on('measure', (data) => {
@@ -60,7 +60,7 @@ client.on('connect', async function(){
         
         client.publish('iot1/test1/environment', JSON.stringify(publishMsg));
         console.log('send msg : ', publishMsg);
-    }, 5000);
+    }, 10000);
     
     // client.end();
 });
